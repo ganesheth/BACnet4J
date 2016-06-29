@@ -28,6 +28,9 @@
  */
 package com.serotonin.bacnet4j.type.primitive;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.base.BACnetUtils;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
 
@@ -36,7 +39,7 @@ public class Real extends Primitive {
 
     public static final byte TYPE_ID = 4;
 
-    private final float value;
+    private float value;
 
     public Real(float value) {
         this.value = value;
@@ -94,5 +97,24 @@ public class Real extends Primitive {
     @Override
     public String toString() {
         return Float.toString(value);
+    }
+    
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    public Object getValue(){
+    	return value;
+    }
+    
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	obj.put(JSON_CAPSULE, value);
+    	return obj;
+    }
+    
+    @Override
+    public void updateFromJson(String value){
+    	this.value = Float.parseFloat(value);
     }
 }

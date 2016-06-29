@@ -37,6 +37,8 @@ import com.serotonin.bacnet4j.util.sero.ByteQueue;
 
 abstract public class Primitive extends Encodable {
     private static final long serialVersionUID = 611651273642455709L;
+    
+    protected static final String JSON_CAPSULE = "value";
 
     public static Primitive createPrimitive(ByteQueue queue) throws BACnetErrorException {
         // Get the first byte. The 4 high-order bits will tell us what the data type is.
@@ -181,4 +183,6 @@ abstract public class Primitive extends Encodable {
 
         return length;
     }
+    
+    public abstract Object getValue();
 }

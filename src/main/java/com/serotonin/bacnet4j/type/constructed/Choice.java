@@ -30,6 +30,8 @@ package com.serotonin.bacnet4j.type.constructed;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
@@ -76,6 +78,16 @@ public class Choice extends BaseType {
     @Override
     public String toString() {
         return datum.toString();
+    }
+    
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	return getDatum().toJsonObject();
     }
 
     @Override

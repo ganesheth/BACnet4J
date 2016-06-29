@@ -28,6 +28,8 @@
  */
 package com.serotonin.bacnet4j.type.primitive;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.type.enumerated.ObjectType;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
 
@@ -62,6 +64,36 @@ public class ObjectIdentifier extends Primitive {
     @Override
     public String toString() {
         return objectType.toString() + " " + instanceNumber;
+    }
+    
+    public String getIDSTring(){
+    	return String.format("%d_%d", objectType.intValue(), instanceNumber);
+    }
+    
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    public Object getValue(){
+    	return toJsonObject();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	obj.put("objectType", objectType.intValue());
+    	obj.put("instance", instanceNumber);
+    	obj.put("objectTypeName", objectType.toString());
+    	return obj;
+    }
+    
+    public static ObjectIdentifier createFromJson(String jsonString){
+    	JSONObject obj = new JSONObject(jsonString);
+    	int objType = obj.getInt("objectType");
+    	ObjectType objectType = new ObjectType(objType);
+    	int inst = obj.getInt("instance");
+    	return new ObjectIdentifier(objectType, inst);    	
     }
 
     //

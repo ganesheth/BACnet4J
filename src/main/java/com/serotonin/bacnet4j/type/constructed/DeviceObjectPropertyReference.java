@@ -28,6 +28,8 @@
  */
 package com.serotonin.bacnet4j.type.constructed;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.type.enumerated.PropertyIdentifier;
 import com.serotonin.bacnet4j.type.primitive.ObjectIdentifier;
@@ -37,10 +39,10 @@ import com.serotonin.bacnet4j.util.sero.ByteQueue;
 public class DeviceObjectPropertyReference extends BaseType {
     private static final long serialVersionUID = 7213978555689308091L;
 
-    private final ObjectIdentifier objectIdentifier; // 0
-    private final PropertyIdentifier propertyIdentifier; // 1
-    private final UnsignedInteger propertyArrayIndex; // 2 optional
-    private final ObjectIdentifier deviceIdentifier; // 3 optional
+    private  ObjectIdentifier objectIdentifier; // 0
+    private PropertyIdentifier propertyIdentifier; // 1
+    private  UnsignedInteger propertyArrayIndex; // 2 optional
+    private  ObjectIdentifier deviceIdentifier; // 3 optional
 
     public DeviceObjectPropertyReference(ObjectIdentifier objectIdentifier, PropertyIdentifier propertyIdentifier,
             UnsignedInteger propertyArrayIndex, ObjectIdentifier deviceIdentifier) {
@@ -133,5 +135,42 @@ public class DeviceObjectPropertyReference extends BaseType {
         return "DeviceObjectPropertyReference [objectIdentifier=" + objectIdentifier + ", propertyIdentifier="
                 + propertyIdentifier + ", propertyArrayIndex=" + propertyArrayIndex + ", deviceIdentifier="
                 + deviceIdentifier + "]";
+    }
+    
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	if(objectIdentifier != null)
+    		obj.put("objectIdentifier", objectIdentifier.toJsonObject());
+    	if(propertyIdentifier != null)
+    		obj.put("propertyIdentifier", propertyIdentifier.intValue());
+    	if(propertyArrayIndex != null)
+    		obj.put("propertyArrayIndex", propertyArrayIndex.intValue());
+    	if(deviceIdentifier != null)
+    		obj.put("deviceIdentifier", deviceIdentifier.toJsonObject());
+    	return obj;
+    }
+    
+    @Override
+    public void updateFromJson(String value){
+    	JSONObject jsonObject = new JSONObject(value);
+    	
+    	objectIdentifier = ObjectIdentifier.createFromJson(jsonObject.get("objectIdentifier").toString());
+    	
+    	int propId = jsonObject.getInt("propertyIdentifier");
+    	propertyIdentifier = new PropertyIdentifier(propId);
+    	
+    	if(jsonObject.has("propertyArrayIndex")){
+    		int index = jsonObject.getInt("propertyArrayIndex");
+    		propertyArrayIndex = new UnsignedInteger(index);
+    	}
+    	
+    	if(jsonObject.has("deviceIdentifier"))
+    		deviceIdentifier = ObjectIdentifier.createFromJson(jsonObject.get("deviceIdentifier").toString());
     }
 }

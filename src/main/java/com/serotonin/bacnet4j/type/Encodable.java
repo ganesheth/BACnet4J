@@ -33,6 +33,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.base.BACnetUtils;
 import com.serotonin.bacnet4j.exception.BACnetErrorException;
 import com.serotonin.bacnet4j.exception.BACnetException;
@@ -66,6 +68,18 @@ abstract public class Encodable implements Serializable {
     @Override
     public String toString() {
         return "Encodable(" + getClass().getName() + ")";
+    }
+    
+    public String toJsonString(){
+    	return toString();
+    }
+    
+    public JSONObject toJsonObject(){
+    	return new JSONObject();
+    }
+    
+    public void updateFromJson(String value){
+
     }
 
     protected static void popTagData(ByteQueue queue, TagData tagData) {

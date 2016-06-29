@@ -30,6 +30,9 @@ package com.serotonin.bacnet4j.type.primitive;
 
 import java.util.Arrays;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.base.BACnetUtils;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
 
@@ -152,6 +155,16 @@ public class BitString extends Primitive {
         return true;
     }
 
+    @Override
+    public String toJsonString(){
+    	JSONArray ar = new JSONArray();
+    	for(boolean b : value)
+    		ar.put(b);
+    	JSONObject obj = new JSONObject();
+    	obj.put(JSON_CAPSULE, ar);
+    	return obj.toString();
+    }
+    
     @Override
     public String toString() {
         return Arrays.toString(value);

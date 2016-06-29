@@ -31,10 +31,13 @@ package com.serotonin.bacnet4j.type.primitive;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.enums.DayOfWeek;
 import com.serotonin.bacnet4j.enums.Month;
 import com.serotonin.bacnet4j.exception.BACnetRuntimeException;
 import com.serotonin.bacnet4j.type.DateMatchable;
+import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
 
 public class Date extends Primitive implements Comparable<Date>, DateMatchable {
@@ -388,4 +391,36 @@ public class Date extends Primitive implements Comparable<Date>, DateMatchable {
     public String toString() {
         return "Date [year=" + year + ", month=" + month + ", day=" + day + ", dayOfWeek=" + dayOfWeek + "]";
     }
+    
+   
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	obj.put("year", year);
+    	obj.put("month", month.ordinal());
+    	obj.put("day", day);
+    	obj.put("dayOfWeek", dayOfWeek.ordinal());
+    	return obj;
+    }
+    
+    @Override
+    public void updateFromJson(String value){
+    	JSONObject obj = new JSONObject(value);
+    	int y = obj.getInt("year");
+    	int m = obj.getInt("month");
+    	int d = obj.getInt("day");
+    	this.year = y;
+    	this.month = Month.valueOf(m);
+    	this.day = d;
+    }
+    
+    public Object getValue(){
+    	return toJsonObject();
+    }
+    
 }

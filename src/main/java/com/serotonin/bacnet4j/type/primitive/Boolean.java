@@ -28,6 +28,9 @@
  */
 package com.serotonin.bacnet4j.type.primitive;
 
+import org.json.JSONObject;
+
+import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
 
 public class Boolean extends Primitive {
@@ -38,7 +41,7 @@ public class Boolean extends Primitive {
 
     public static final byte TYPE_ID = 1;
 
-    protected final boolean value;
+    protected boolean value;
 
     public Boolean(boolean value) {
         this.value = value;
@@ -100,4 +103,24 @@ public class Boolean extends Primitive {
     public String toString() {
         return java.lang.Boolean.toString(value);
     }
+    
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	obj.put(JSON_CAPSULE, value);
+    	return obj;
+    }
+    
+    public Object getValue(){
+    	return value;
+    }
+    
+    @Override
+    public void updateFromJson(String value){
+    	java.lang.Boolean val =  java.lang.Boolean.parseBoolean(value);
+    	this.value = val;
+    }    
 }

@@ -31,6 +31,11 @@ package com.serotonin.bacnet4j.type.primitive;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.json.JSONObject;
+
+import com.serotonin.bacnet4j.enums.DayOfWeek;
+import com.serotonin.bacnet4j.enums.Month;
+import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
 
 public class Time extends Primitive {
@@ -40,10 +45,10 @@ public class Time extends Primitive {
 
     public static final byte TYPE_ID = 11;
 
-    private final int hour;
-    private final int minute;
-    private final int second;
-    private final int hundredth;
+    private  int hour;
+    private  int minute;
+    private  int second;
+    private  int hundredth;
 
     public Time(int hour, int minute, int second, int hundredth) {
         this.hour = hour;
@@ -227,4 +232,35 @@ public class Time extends Primitive {
                 + hundredth;
 
     }
+    
+    @Override
+    public String toJsonString(){
+
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	obj.put("hour", hour);
+    	obj.put("minute", minute);
+    	obj.put("second", second);
+    	obj.put("hundredthsSeconds", hundredth);
+    	return obj;
+    }
+
+    public Object getValue(){
+    	return toJsonObject();
+    }
+    
+    @Override
+    public void updateFromJson(String value){
+    	JSONObject obj = new JSONObject(value);
+    	int h = obj.getInt("hour");
+    	int m = obj.getInt("minute");
+    	int s = obj.getInt("second");
+    	this.hour = h;
+    	this.minute = m;
+    	this.second = s;
+    }    
 }

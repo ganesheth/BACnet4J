@@ -385,6 +385,7 @@ public class PropertyIdentifier extends Enumerated {
     public static final PropertyIdentifier power = new PropertyIdentifier(384);
     public static final PropertyIdentifier transition = new PropertyIdentifier(385);
     public static final PropertyIdentifier egressActive = new PropertyIdentifier(386);
+    public static final PropertyIdentifier progressValue = new PropertyIdentifier(5083);
 
     public static final PropertyIdentifier[] ALL = { ackedTransitions, ackRequired, action, actionText, activeText,
             activeVtSessions, alarmValue, alarmValues, all, allWritesSuccessful, apduSegmentTimeout, apduTimeout,
@@ -448,7 +449,7 @@ public class PropertyIdentifier extends Enumerated {
             channelNumber, controlGroups, executionDelay, lastPriority, writeStatus, propertyList, serialNumber,
             blinkWarnEnable, defaultFadeTime, defaultRampRate, defaultStepIncrement, egressTime, inProgress,
             instantaneousPower, lightingCommand, lightingCommandDefaultPriority, maxActualValue, minActualValue, power,
-            transition, egressActive,
+            transition, egressActive, progressValue,
 
     };
 
@@ -1167,6 +1168,8 @@ public class PropertyIdentifier extends Enumerated {
             return "transition";
         if (type == egressActive.intValue())
             return "egressActive";
+        if (type == progressValue.intValue())
+            return "progressValue";        
         return "Unknown: " + type;
     }
 }

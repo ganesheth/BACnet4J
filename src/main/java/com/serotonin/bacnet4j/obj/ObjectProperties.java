@@ -38,6 +38,7 @@ import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.type.constructed.AccumulatorRecord;
 import com.serotonin.bacnet4j.type.constructed.ActionList;
 import com.serotonin.bacnet4j.type.constructed.AddressBinding;
+import com.serotonin.bacnet4j.type.constructed.BACnetArray;
 import com.serotonin.bacnet4j.type.constructed.CalendarEntry;
 import com.serotonin.bacnet4j.type.constructed.ClientCov;
 import com.serotonin.bacnet4j.type.constructed.CovSubscription;
@@ -60,6 +61,7 @@ import com.serotonin.bacnet4j.type.constructed.ReadAccessResult;
 import com.serotonin.bacnet4j.type.constructed.ReadAccessSpecification;
 import com.serotonin.bacnet4j.type.constructed.Recipient;
 import com.serotonin.bacnet4j.type.constructed.Scale;
+import com.serotonin.bacnet4j.type.constructed.Sequence;
 import com.serotonin.bacnet4j.type.constructed.ServicesSupported;
 import com.serotonin.bacnet4j.type.constructed.SetpointReference;
 import com.serotonin.bacnet4j.type.constructed.ShedLevel;
@@ -1027,5 +1029,11 @@ public class ObjectProperties {
         add(ObjectType.trendLogMultiple, PropertyIdentifier.eventTimeStamps, TimeStamp.class, true, false);
         add(ObjectType.trendLogMultiple, PropertyIdentifier.propertyList, PropertyIdentifier.class, true, true);
         add(ObjectType.trendLogMultiple, PropertyIdentifier.profileName, CharacterString.class, false, false);
+        
+        //Blinds command
+        add(ObjectType.blindsCommand, PropertyIdentifier.objectIdentifier, ObjectIdentifier.class, false, true);
+        add(ObjectType.blindsCommand, PropertyIdentifier.objectName, CharacterString.class, false, true);
+        add(ObjectType.blindsCommand, PropertyIdentifier.presentValue, Real.class, true, true);
+        add(ObjectType.blindsCommand, PropertyIdentifier.progressValue, Real.class, true, true);
     }
 }

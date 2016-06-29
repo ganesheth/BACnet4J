@@ -31,7 +31,12 @@ package com.serotonin.bacnet4j.type.constructed;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.json.JSONObject;
+
+import com.serotonin.bacnet4j.enums.DayOfWeek;
+import com.serotonin.bacnet4j.enums.Month;
 import com.serotonin.bacnet4j.exception.BACnetException;
+import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.type.primitive.Date;
 import com.serotonin.bacnet4j.type.primitive.Time;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
@@ -128,4 +133,27 @@ public class DateTime extends BaseType {
     public String toString() {
         return "DateTime [date=" + date + ", time=" + time + "]";
     }
+    
+    @Override
+    public String toJsonString(){
+    	String jsonString = toJsonObject().toString();
+    	return jsonString;
+    }
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	obj.put("date", date.toJsonObject());
+    	obj.put("time", time.toJsonObject());
+    	return obj;
+    }
+    
+    @Override
+    public void updateFromJson(String value){
+    	JSONObject dtm = new JSONObject(value);
+    	JSONObject dt = dtm.getJSONObject("date");
+    	JSONObject tm = dtm.getJSONObject("time");
+    	this.date.updateFromJson(dt.toString());
+    	this.time.updateFromJson(tm.toString());
+    }
+    
 }

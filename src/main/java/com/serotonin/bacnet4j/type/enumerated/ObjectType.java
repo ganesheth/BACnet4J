@@ -63,12 +63,13 @@ public class ObjectType extends Enumerated {
     public static final ObjectType loadControl = new ObjectType(28);
     public static final ObjectType structuredView = new ObjectType(29);
     public static final ObjectType accessDoor = new ObjectType(30);
+    public static final ObjectType blindsCommand = new ObjectType(258);
 
     public static final ObjectType[] ALL = { analogInput, analogOutput, analogValue, binaryInput, binaryOutput,
             binaryValue, calendar, command, device, eventEnrollment, file, group, loop, multiStateInput,
             multiStateOutput, notificationClass, program, schedule, averaging, multiStateValue, trendLog,
             lifeSafetyPoint, lifeSafetyZone, accumulator, pulseConverter, eventLog, trendLogMultiple, loadControl,
-            structuredView, accessDoor, };
+            structuredView, accessDoor, blindsCommand, };
 
     public ObjectType(int value) {
         super(value);
@@ -141,6 +142,8 @@ public class ObjectType extends Enumerated {
             return "Structured View";
         if (type == accessDoor.intValue())
             return "Access Door";
+        if (type == blindsCommand.intValue())
+            return "Blinds Command";
         return "Vendor Specific (" + type + ")";
     }
 }

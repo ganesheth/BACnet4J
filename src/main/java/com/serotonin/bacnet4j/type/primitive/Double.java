@@ -28,6 +28,8 @@
  */
 package com.serotonin.bacnet4j.type.primitive;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.base.BACnetUtils;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
 
@@ -36,7 +38,7 @@ public class Double extends Primitive {
 
     public static final byte TYPE_ID = 5;
 
-    private final double value;
+    private double value;
 
     public Double(double value) {
         this.value = value;
@@ -96,5 +98,24 @@ public class Double extends Primitive {
     @Override
     public String toString() {
         return java.lang.Double.toString(value);
+    }
+    
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	obj.put(JSON_CAPSULE, value);
+    	return obj;
+    }
+    
+    public Object getValue(){
+    	return value;
+    }
+    
+    @Override
+    public void updateFromJson(String val){
+    	this.value = java.lang.Double.parseDouble(val);
     }
 }

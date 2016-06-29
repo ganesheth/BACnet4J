@@ -67,6 +67,10 @@ public class Null extends Primitive {
             return false;
         return true;
     }
+    
+    public Object getValue(){
+    	return null;
+    }
 
     @Override
     public String toString() {

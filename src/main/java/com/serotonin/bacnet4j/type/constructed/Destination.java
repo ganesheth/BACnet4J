@@ -28,6 +28,8 @@
  */
 package com.serotonin.bacnet4j.type.constructed;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.type.enumerated.EventState;
 import com.serotonin.bacnet4j.type.primitive.Boolean;
@@ -205,5 +207,23 @@ public class Destination extends BaseType {
         return "Destination [validDays=" + validDays + ", fromTime=" + fromTime + ", toTime=" + toTime + ", recipient="
                 + recipient + ", processIdentifier=" + processIdentifier + ", issueConfirmedNotifications="
                 + issueConfirmedNotifications + ", transitions=" + transitions + "]";
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	obj.put("validDays", validDays);
+    	obj.put("fromTime", fromTime);
+    	obj.put("toTime", toTime);
+    	obj.put("recipient", recipient);
+    	obj.put("processIdentifier", processIdentifier);
+    	obj.put("issueConfirmedNotifications", issueConfirmedNotifications);
+    	obj.put("transitions", transitions);
+    	return obj;    	
+    }
+    
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
     }
 }

@@ -30,6 +30,8 @@ package com.serotonin.bacnet4j.type.primitive;
 
 import java.math.BigInteger;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
 
 public class UnsignedInteger extends Primitive {
@@ -161,5 +163,33 @@ public class UnsignedInteger extends Primitive {
         if (bigValue == null)
             return Integer.toString(smallValue);
         return bigValue.toString();
+    }
+    
+    @Override
+    public String toJsonString() {
+        return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+        if (bigValue == null)
+        	obj.put(JSON_CAPSULE, smallValue);
+        else
+        	obj.put(JSON_CAPSULE, bigValue);
+        return obj;
+    }
+    
+    public Object getValue(){
+    	if (bigValue != null)
+    		return bigValue;
+    	else
+    		return smallValue;
+    }
+    
+    @Override
+    public void updateFromJson(String value){
+    	//java.lang.Boolean val =  java.lang.Boolean.parseBoolean(value);
+    	this.smallValue = Integer.parseInt(value)  ;
     }
 }

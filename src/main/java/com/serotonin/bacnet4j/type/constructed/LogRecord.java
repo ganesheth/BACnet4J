@@ -31,6 +31,8 @@ package com.serotonin.bacnet4j.type.constructed;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.type.primitive.BitString;
@@ -231,5 +233,22 @@ public class LogRecord extends BaseType {
     @Override
     public String toString() {
         return "LogRecord [timestamp=" + timestamp + ", choice=" + choice + ", statusFlags=" + statusFlags + "]";
+    }
+    
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	if(timestamp != null)
+    		obj.put("timestamp", timestamp.toJsonString());
+    	if(choice != null)
+    		obj.put("value", choice.toString());
+    	if(statusFlags != null)
+    		obj.put("statusFlags", statusFlags.toJsonString());
+    	return obj;
     }
 }

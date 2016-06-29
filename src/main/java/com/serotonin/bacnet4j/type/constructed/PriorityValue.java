@@ -28,6 +28,8 @@
  */
 package com.serotonin.bacnet4j.type.constructed;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetErrorException;
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.type.AmbiguousValue;
@@ -137,6 +139,29 @@ public class PriorityValue extends BaseType {
             sb.append("constructedValue=").append(constructedValue);
         sb.append(")");
         return sb.toString();
+    }
+    
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	
+        if (nullValue != null)
+            obj.put("nullValue", nullValue.toString());
+        else if (realValue != null)
+        	obj.put("realValue", realValue.floatValue());
+        else if (binaryValue != null)
+        	obj.put("binaryValue", binaryValue.intValue());
+        else if (integerValue != null)
+            obj.put("integerValue", integerValue.intValue());
+        else if (constructedValue != null)
+        	obj.put("constructedValue", constructedValue.toJsonObject());
+
+    	return obj;
     }
 
     @Override

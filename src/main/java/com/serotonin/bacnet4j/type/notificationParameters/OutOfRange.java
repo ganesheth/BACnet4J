@@ -28,6 +28,8 @@
  */
 package com.serotonin.bacnet4j.type.notificationParameters;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.type.constructed.StatusFlags;
 import com.serotonin.bacnet4j.type.primitive.Real;
@@ -90,6 +92,23 @@ public class OutOfRange extends NotificationParameters {
     public String toString() {
         return "OutOfRange [exceedingValue=" + exceedingValue + ", statusFlags=" + statusFlags + ", deadband="
                 + deadband + ", exceededLimit=" + exceededLimit + "]";
+    }
+    
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject outerObject = new JSONObject();
+    	JSONObject obj = new JSONObject();
+    	obj.put("exceedingValue", exceedingValue);
+    	obj.put("statusFlags", statusFlags);
+    	obj.put("deadband", deadband);
+    	obj.put("exceededLimit", exceededLimit);
+    	outerObject.put("OutOfRange", obj);
+    	return obj;
     }
 
     @Override

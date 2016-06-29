@@ -33,8 +33,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.type.Encodable;
+import com.serotonin.bacnet4j.type.primitive.Primitive;
+import com.serotonin.bacnet4j.type.primitive.Real;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
 import com.serotonin.bacnet4j.util.sero.Utils;
 
@@ -155,6 +160,37 @@ public class SequenceOf<E extends Encodable> extends BaseType implements Iterabl
 
     public List<E> getValues() {
         return values;
+    }
+    
+    @Override
+    public String toJsonString(){
+    	JSONArray ar = new JSONArray();
+    	for(E e : values){
+    		if(e instanceof Primitive)
+    			ar.put(((Primitive)e).getValue());
+    		else
+    			ar.put(e.toJsonObject());
+    	}
+    	return ar.toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONArray ar = new JSONArray();
+    	for(E e : values){
+    		if(e instanceof Primitive)
+    			ar.put(((Primitive)e).getValue());
+    		else
+    			ar.put(e.toJsonObject());
+    	}
+    	return new JSONObject(ar);
+    }
+    
+    public void updateFromJson(String value){
+    	JSONArray arr = new JSONArray(value);
+    	int index = 0;
+    	for(E e : values)
+    		e.updateFromJson(arr.get(index++).toString());
     }
 
     @Override

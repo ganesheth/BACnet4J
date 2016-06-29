@@ -103,4 +103,8 @@ public class OctetString extends Primitive {
     public String getDescription() {
         return NetworkUtils.toString(this);
     }
+    
+    public Object getValue(){
+    	return value;
+    }
 }

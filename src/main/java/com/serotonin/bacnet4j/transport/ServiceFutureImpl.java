@@ -42,6 +42,7 @@ import com.serotonin.bacnet4j.util.sero.ThreadUtils;
 
 public class ServiceFutureImpl implements ServiceFuture, ResponseConsumer {
     private AcknowledgementService ack;
+    private volatile boolean simpleAckSuccess;
     private AckAPDU fail;
     private BACnetException ex;
     private volatile boolean done;
@@ -67,6 +68,9 @@ public class ServiceFutureImpl implements ServiceFuture, ResponseConsumer {
 
         ThreadUtils.wait(this, timeout);
 
+        if(simpleAckSuccess && ex == null && ack == null && fail == null)
+        	return null;
+        
         if(ex == null && ack == null && fail == null)
         	ex = new BACnetException("Timeout waiting for response.");
         
@@ -88,6 +92,7 @@ public class ServiceFutureImpl implements ServiceFuture, ResponseConsumer {
     @Override
     public synchronized void success(AcknowledgementService ack) {
         this.ack = ack;
+        simpleAckSuccess = true;
         complete();
     }
 

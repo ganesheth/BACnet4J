@@ -109,7 +109,7 @@ public class Real extends Primitive {
     
     public JSONObject toJsonObject(){
     	JSONObject obj = new JSONObject();
-    	obj.put(JSON_CAPSULE, value);
+    	obj.put(JSON_CAPSULE, (Math.round(value * 100))/100.0);
     	return obj;
     }
     

@@ -31,6 +31,8 @@ package com.serotonin.bacnet4j.type.constructed;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.type.primitive.Time;
@@ -102,6 +104,23 @@ public class TimeStamp extends BaseType {
     @Override
     public String toString() {
         return "TimeStamp [choice=" + choice + "]";
+    }
+
+    
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+
+    
+    public JSONObject toJsonObject(){
+    	if(isDateTime())
+    		return getDateTime().toJsonObject();
+    	else if(isTime())
+    		return getTime().toJsonObject();
+    	else if (isSequenceNumber())
+    		return getSequenceNumber().toJsonObject();
+    	else
+    		return null;
     }
 
     @Override

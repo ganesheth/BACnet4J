@@ -30,6 +30,8 @@ package com.serotonin.bacnet4j.type.primitive;
 
 import java.io.UnsupportedEncodingException;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetErrorException;
 import com.serotonin.bacnet4j.exception.BACnetRuntimeException;
 import com.serotonin.bacnet4j.type.enumerated.ErrorClass;
@@ -179,6 +181,17 @@ public class CharacterString extends Primitive {
         else if (!value.equals(other.value))
             return false;
         return true;
+    }
+    
+   
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	obj.put(JSON_CAPSULE, value);
+    	return obj;
     }
 
     @Override

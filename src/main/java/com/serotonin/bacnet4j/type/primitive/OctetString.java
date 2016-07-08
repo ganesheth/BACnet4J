@@ -30,6 +30,9 @@ package com.serotonin.bacnet4j.type.primitive;
 
 import java.util.Arrays;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.npdu.NetworkUtils;
 import com.serotonin.bacnet4j.util.sero.ArrayUtils;
 import com.serotonin.bacnet4j.util.sero.ByteQueue;
@@ -99,6 +102,21 @@ public class OctetString extends Primitive {
     public String toString() {
         return ArrayUtils.toHexString(value);
     }
+    
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject() {
+    	JSONArray ar = new JSONArray();
+    	for(int i=0; i < value.length; i++)
+    		ar.put(value[i] & 0xff);
+    	JSONObject obj = new JSONObject();
+    	obj.put("value", ar);
+    	return obj;
+    };
 
     public String getDescription() {
         return NetworkUtils.toString(this);

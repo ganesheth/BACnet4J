@@ -28,6 +28,8 @@
  */
 package com.serotonin.bacnet4j.type.constructed;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.type.primitive.OctetString;
 import com.serotonin.bacnet4j.type.primitive.Unsigned16;
@@ -143,6 +145,20 @@ public class Address extends BaseType {
     @Override
     public String toString() {
         return "Address [networkNumber=" + networkNumber + ", macAddress=" + macAddress + "]";
+    }
+    
+
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	obj.put("networkNumber", networkNumber.intValue());
+    	obj.put("macAddress", macAddress.toJsonObject());
+    	return obj;
     }
 
     @Override

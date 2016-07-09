@@ -31,6 +31,8 @@ package com.serotonin.bacnet4j.type.constructed;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.serotonin.bacnet4j.exception.BACnetException;
 import com.serotonin.bacnet4j.type.Encodable;
 import com.serotonin.bacnet4j.type.primitive.ObjectIdentifier;
@@ -110,5 +112,20 @@ public class Recipient extends BaseType {
     @Override
     public String toString() {
         return "Recipient [choice=" + choice + "]";
+    }
+    
+    @Override
+    public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+	public JSONObject toJsonObject(){
+    	JSONObject obj = new JSONObject();
+    	if(isDevice())
+    		obj.put("deviceId", getDevice().toJsonObject());
+    	else if (isAddress())
+    		obj.put("address", getAddress().toJsonObject());
+    	return obj;
     }
 }

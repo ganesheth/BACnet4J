@@ -157,12 +157,17 @@ public class BitString extends Primitive {
 
     @Override
     public String toJsonString(){
+    	return toJsonObject().toString();
+    }
+    
+    @Override
+    public JSONObject toJsonObject(){
     	JSONArray ar = new JSONArray();
     	for(boolean b : value)
     		ar.put(b);
     	JSONObject obj = new JSONObject();
     	obj.put(JSON_CAPSULE, ar);
-    	return obj.toString();
+    	return obj;
     }
     
     @Override

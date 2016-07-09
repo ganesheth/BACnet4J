@@ -212,13 +212,13 @@ public class Destination extends BaseType {
     @Override
     public JSONObject toJsonObject(){
     	JSONObject obj = new JSONObject();
-    	obj.put("validDays", validDays);
-    	obj.put("fromTime", fromTime);
-    	obj.put("toTime", toTime);
-    	obj.put("recipient", recipient);
-    	obj.put("processIdentifier", processIdentifier);
-    	obj.put("issueConfirmedNotifications", issueConfirmedNotifications);
-    	obj.put("transitions", transitions);
+    	obj.put("validDays", validDays.toJsonObject());
+    	obj.put("fromTime", fromTime.toJsonObject());
+    	obj.put("toTime", toTime.toJsonObject());
+    	obj.put("recipient", recipient.toJsonObject());
+    	obj.put("processIdentifier", processIdentifier.toJsonObject());
+    	obj.put("issueConfirmedNotifications", issueConfirmedNotifications.toJsonObject());
+    	obj.put("transitions", transitions.toJsonObject());
     	return obj;    	
     }
     

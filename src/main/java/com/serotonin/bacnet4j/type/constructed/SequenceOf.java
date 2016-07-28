@@ -171,7 +171,9 @@ public class SequenceOf<E extends Encodable> extends BaseType implements Iterabl
     		else
     			ar.put(e.toJsonObject());
     	}
-    	return ar.toString();
+    	JSONObject obj = new JSONObject();
+    	obj.put("value", ar);
+    	return obj.toString();
     }
     
     @Override
@@ -183,7 +185,9 @@ public class SequenceOf<E extends Encodable> extends BaseType implements Iterabl
     		else
     			ar.put(e.toJsonObject());
     	}
-    	return new JSONObject(ar);
+    	JSONObject obj = new JSONObject();
+    	obj.put("value", ar);
+    	return obj;
     }
     
     public void updateFromJson(String value){
